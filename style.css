@@ -1,0 +1,368 @@
+/* ================================================= */
+/* 1. GENEL STİL VE TEMEL RENKLER (DARK THEME) */
+/* ================================================= */
+
+/* Tüm siteye yavaşça hareket eden yıldız/büyü partikülleri ekleyelim */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* İçeriğin arkasında kalmalı */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* YENİ KOYU TEMA AYARLARI */
+body {
+    /* Koyu Arka Plan: Lacivert/Siyah tonu (Poster Teması) */
+    background: #0D1026; 
+    color: #EAEAEA; /* AÇIK GRİ/BEYAZ METİN */
+    font-family: 'IM Fell DWG Pica', serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.8;
+}
+
+/* Scrollbar'ı temaya uygun yapalım (İsteğe bağlı) */
+body::-webkit-scrollbar { width: 12px; }
+body::-webkit-scrollbar-track { background: #1a1e33; }
+body::-webkit-scrollbar-thumb {
+    background-color: #ffd700; 
+    border-radius: 20px;
+    border: 3px solid #1a1e33;
+}
+
+/* Başlık Alanı (Header) */
+.hogwarts-header {
+    background: rgba(0, 0, 0, 0.5); /* Hafif şeffaf siyah */
+    color: #FFD700; /* Altın Rengi Vurgu */
+    padding: 30px 0;
+    text-align: center;
+    border-bottom: 3px solid #6a0dad; /* Büyülü Mor/Mavi çizgi */
+    box-shadow: 0 5px 20px rgba(106, 0, 173, 0.5); /* Mor parlama */
+}
+
+.hogwarts-header .logo img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #FFD700; 
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); 
+    margin-bottom: 10px;
+}
+
+.hogwarts-header h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3.5em; /* Daha büyük başlık */
+    margin: 10px 0 0;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5); 
+}
+.hogwarts-header p {
+    color: #c0c0c0;
+}
+
+/* Ana İçerik Alanı */
+.main-content {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: rgba(15, 20, 40, 0.95); /* Koyu, yarı saydam ana kutu */
+    border: 1px solid #6a0dad; 
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(106, 0, 173, 0.5); /* Mor çerçeve parlama */
+}
+
+section {
+    padding: 50px 0;
+    border-bottom: 1px dashed #3a3f5b; /* Koyu ayraç */
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.5em;
+    color: #9370DB; /* Açık Mor/Lavanta rengi */
+    margin-bottom: 30px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    position: relative;
+}
+
+/* ================================================= */
+/* 2. BÜYÜ BUTONU VE EFEKTLER */
+/* ================================================= */
+
+/* Asa Animasyonu (Daha belirgin pırıltı) */
+@keyframes wand-glow {
+    0% { box-shadow: 0 0 5px #fff; }
+    50% { box-shadow: 0 0 15px #ADD8E6, 0 0 30px #ADD8E6; } /* Açık mavi parlama */
+    100% { box-shadow: 0 0 5px #fff; }
+}
+#wand {
+    width: 80px;
+    height: auto;
+    transition: transform 0.5s ease-in-out;
+    animation: wand-glow 3s infinite alternate; /* Pırıltı efekti */
+}
+
+.magic-button {
+    background-color: #800080; /* Koyu Mor */
+    color: #FFD700; /* Altın metin */
+    padding: 15px 30px;
+    border: 2px solid #FFD700;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #800080;
+}
+
+.magic-button:hover {
+    background-color: #9370DB; /* Açık Mor */
+    color: black;
+    box-shadow: 0 0 20px #9370DB;
+}
+
+/* Büyü Efekti (Altın yerine Mavi/Beyaz Parlama) */
+.magic-effect {
+    width: 0; height: 0; background-color: transparent; border-radius: 50%;
+    position: absolute; transform: translate(-50%, -50%); opacity: 0;
+    transition: all 0.5s ease-out;
+}
+
+.magic-effect.active {
+    width: 100px; height: 100px;
+    background-color: rgba(255, 255, 255, 0.8); /* Beyaz parlama */
+    box-shadow: 0 0 20px #ADD8E6, 0 0 50px #ADD8E6; /* Mavi/Gümüş parlama */
+    opacity: 1;
+    animation: pulse 1s forwards;
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+}
+
+/* Gizli Mesaj Alanı */
+.hidden-message {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Hafif şeffaf beyaz kutu */
+    border: 3px dashed #FFD700; 
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-style: italic;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    color: #EAEAEA; /* Beyaz Metin */
+    opacity: 0; 
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1s ease-in-out, max-height 1s ease-in-out;
+}
+
+.hidden-message.visible {
+    opacity: 1;
+    max-height: 500px;
+}
+
+
+/* ================================================= */
+/* 3. ÇAPULCU HARİTASI (Milestone) Kartları */
+/* ================================================= */
+
+.marauder-map {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.milestone-card {
+    background-color: rgba(255, 255, 255, 0.05); /* Koyu Arka Plan Kartları */
+    border: 1px solid #4a4d6e; /* Koyu çerçeve */
+    border-radius: 15px;
+    padding: 20px;
+    width: 400px;
+    text-align: left;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease-in-out;
+}
+
+.milestone-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(147, 112, 219, 0.5); /* Kart üzerinde mor parlama */
+}
+
+.milestone-card h3 {
+    color: #FFD700; /* Altın rengi başlıklar */
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #6a0dad;
+    padding-bottom: 5px;
+    margin-top: 0;
+}
+.milestone-card p {
+    color: #c0c0c0; /* Açık gri metin */
+}
+
+.milestone-card h3 img {
+    width: 30px;
+    height: auto;
+}
+
+/* ================================================= */
+/* 4. FOTOĞRAF GALERİSİ (BÜYÜLÜ ANI ORTAYA ÇIKARMA EFEKTİ) */
+/* ================================================= */
+
+.gallery-section {
+    padding-top: 50px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Galeri Yükleme Büyüsü için başlangıç ayarı (JS ile canlandırılacak) */
+.memory-container {
+    position: relative; 
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    /* JS ile fade-in yapılması için başlangıçta görünmezlik */
+    opacity: 0; 
+    transition: opacity 1s ease-out, box-shadow 0.3s ease;
+}
+
+.gallery-item {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: brightness(0.7); /* Başlangıçta hafif karanlık fotoğraf (mühür altındayken) */
+}
+
+/* Büyü katmanı (mühür) */
+.magic-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 20, 40, 0.85); /* Koyu lacivert şeffaf mühür */
+    color: #FFD700; /* Altın rengi metin */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    transition: opacity 0.4s ease;
+    opacity: 1; /* Başlangıçta tamamen görünür */
+    border: 3px solid #6a0dad; /* Mor çerçeve */
+}
+
+.spell-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.5em;
+    text-shadow: 0 0 8px #FFD700; /* Altın parlama */
+    margin-bottom: 5px;
+}
+
+.memory-desc {
+    font-size: 0.9em;
+    color: #c0c0c0;
+    font-style: italic;
+}
+
+/* FARE ÜZERİNE GELDİĞİNDE (HOVER) ETKİSİ */
+.memory-container:hover .magic-overlay {
+    opacity: 0; /* Mühür kaybolur */
+}
+
+.memory-container:hover .gallery-item {
+    transform: scale(1.1); /* Fotoğraf hafifçe büyür */
+    filter: brightness(1); /* Fotoğraf normal parlaklığına döner ve parlar */
+    box-shadow: 0 0 20px rgba(106, 0, 173, 0.9); /* Mor büyü parlaklığı */
+}
+
+
+/* Footer */
+.hogwarts-footer {
+    background: rgba(0, 0, 0, 0.5);
+    color: #ccc;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    border-top: 3px solid #6a0dad;
+    box-shadow: 0 -5px 20px rgba(106, 0, 173, 0.5);
+    font-family: sans-serif;
+}
+
+/* ================================================= */
+/* 5. ARKA PLAN ANİMASYONU CSS'İ */
+/* ================================================= */
+
+/* Yıldız/Partikül Animasyonunun Görünümü */
+.star {
+    position: absolute;
+    background-color: #f7f7f7; /* Beyaz/Gümüş rengi */
+    border-radius: 50%;
+    /* Büyü/Uçuş efekti */
+    animation: star-move linear infinite, star-blink 2s alternate infinite;
+}
+
+@keyframes star-move {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-100px) translateX(100px); } /* Yavaşça yukarı ve sağa kayma */
+}
+
+@keyframes star-blink {
+    0% { opacity: 0.2; }
+    100% { opacity: 1; }
+}
+
+/* ================================================= */
+/* 6. RESPONSIVE TASARIM */
+/* ================================================= */
+
+@media (max-width: 768px) {
+    .hogwarts-header h1 {
+        font-size: 2.5em;
+    }
+
+    .main-content {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+    
+    .milestone-card {
+        width: 100%;
+        max-width: none;
+    }
+
+    .image-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .memory-container {
+        height: 150px;
+    }
+}
